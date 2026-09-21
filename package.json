@@ -1,0 +1,13 @@
+{
+  "name": "gestta-empresa-plus",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "install:api": "npm install --prefix apps/api",
+    "install:web": "npm install --prefix apps/web",
+    "dev:api": "npm --prefix apps/api run start:dev",
+    "dev:web": "npm --prefix apps/web run dev",
+    "build": "npm --prefix apps/api run build && npm --prefix apps/web run build",
+    "check": "npm --prefix apps/api run build && npm --prefix apps/web run build"
+  }
+}
