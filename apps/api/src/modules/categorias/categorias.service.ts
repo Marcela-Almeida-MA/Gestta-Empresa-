@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { randomUUID } from 'crypto';
+import { randomUUID } from 'node:crypto';
 import { AuthService } from '../auth/auth.service';
 
 export type Categoria = {
@@ -124,7 +124,7 @@ export class CategoriasService {
       (vinculo: any) => vinculo.usuarioId === usuarioId && vinculo.empresaId === empresaId,
     );
 
-    if (!empresa || empresa.papel !== 'admin') {
+    if (empresa?.papel !== 'admin') {
       throw new UnauthorizedException('Somente administradores podem gerenciar categorias.');
     }
   }

@@ -5,10 +5,11 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CategoriasModule } from './modules/categorias/categorias.module';
 import { EmpresasModule } from './modules/empresas/empresas.module';
 import { ProdutosModule } from './modules/produtos/produtos.module';
+import { SupabaseService } from './supabase.service';
 
 @Module({
   imports: [AuthModule, EmpresasModule, CategoriasModule, ProdutosModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SupabaseService],
 })
 export class AppModule {}

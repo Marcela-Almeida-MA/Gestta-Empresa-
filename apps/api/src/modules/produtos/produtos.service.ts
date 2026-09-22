@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { randomUUID } from 'crypto';
+import { randomUUID } from 'node:crypto';
 import { AuthService } from '../auth/auth.service';
 
 export type Produto = {
@@ -125,7 +125,7 @@ export class ProdutosService {
       (item: any) => item.usuarioId === usuarioId && item.empresaId === empresaId,
     );
 
-    if (!vinculo || vinculo.papel !== 'admin') {
+    if (vinculo?.papel !== 'admin') {
       throw new UnauthorizedException('Somente administradores podem gerenciar produtos.');
     }
   }
