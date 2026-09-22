@@ -5,4 +5,5 @@ apps/*/.cache/
 npm-debug.log*
 .env
 .env.*
+!.env.example
 coverage/

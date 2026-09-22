@@ -9,5 +9,8 @@
     "dev:web": "npm --prefix apps/web run dev",
     "build": "npm --prefix apps/api run build && npm --prefix apps/web run build",
     "check": "npm --prefix apps/api run build && npm --prefix apps/web run build"
+  },
+  "devDependencies": {
+    "supabase": "^2.117.0"
   }
 }
