@@ -17,14 +17,14 @@ export class ProdutosController {
   }
 
   @Post()
-  criar(@Headers('authorization') authorization: string, @Headers('x-empresa-id') empresaId: string, @Body() body: { nome: string; sku: string; descricao?: string; categoriaId?: string | null; custoUnitario: number; precoVenda: number; estoqueMinimo: number; quantidadeInicial?: number }) {
+  criar(@Headers('authorization') authorization: string, @Headers('x-empresa-id') empresaId: string, @Body() body: { nome: string; sku: string; descricao?: string; categoriaId?: string | null; fotoUrl?: string | null; custoUnitario: number; precoVenda: number; estoqueMinimo: number; quantidadeInicial?: number }) {
     const usuarioId = this.authService['validarToken'](authorization ?? '');
     this.authService.obterEmpresaDoUsuario(usuarioId, empresaId);
     return this.produtosService.criar(usuarioId, empresaId, body);
   }
 
   @Patch(':id')
-  atualizar(@Headers('authorization') authorization: string, @Headers('x-empresa-id') empresaId: string, @Param('id') id: string, @Body() body: { nome?: string; sku?: string; descricao?: string; categoriaId?: string | null; custoUnitario?: number; precoVenda?: number; estoqueMinimo?: number; ativo?: boolean }) {
+  atualizar(@Headers('authorization') authorization: string, @Headers('x-empresa-id') empresaId: string, @Param('id') id: string, @Body() body: { nome?: string; sku?: string; descricao?: string; categoriaId?: string | null; fotoUrl?: string | null; custoUnitario?: number; precoVenda?: number; estoqueMinimo?: number; ativo?: boolean }) {
     const usuarioId = this.authService['validarToken'](authorization ?? '');
     this.authService.obterEmpresaDoUsuario(usuarioId, empresaId);
     return this.produtosService.atualizar(usuarioId, empresaId, id, body);

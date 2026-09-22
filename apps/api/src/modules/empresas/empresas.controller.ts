@@ -20,7 +20,7 @@ export class EmpresasController {
   }
 
   @Post()
-  async criar(@Headers('authorization') authorization: string, @Body() body: { nome: string; documento?: string | null; unidadesMesEstimadas?: number }) {
+  async criar(@Headers('authorization') authorization: string, @Body() body: { nome: string; documento?: string | null; unidadesMesEstimadas?: number; fotoUrl?: string | null; descricao?: string; slogan?: string; paleta?: 'folha' | 'oceano' | 'grafite' | 'terracota' }) {
     const usuarioId = this.authService['validarToken'](authorization ?? '');
     return this.authService.criarEmpresa(usuarioId, body);
   }
@@ -32,7 +32,7 @@ export class EmpresasController {
   }
 
   @Patch('atual')
-  async atualizar(@Headers('authorization') authorization: string, @Headers('x-empresa-id') empresaId: string, @Body() body: { nome?: string; documento?: string | null; unidadesMesEstimadas?: number }) {
+  async atualizar(@Headers('authorization') authorization: string, @Headers('x-empresa-id') empresaId: string, @Body() body: { nome?: string; documento?: string | null; unidadesMesEstimadas?: number; fotoUrl?: string | null; descricao?: string; slogan?: string; paleta?: 'folha' | 'oceano' | 'grafite' | 'terracota' }) {
     const usuarioId = this.authService['validarToken'](authorization ?? '');
     return this.authService.atualizarEmpresa(usuarioId, empresaId, body);
   }

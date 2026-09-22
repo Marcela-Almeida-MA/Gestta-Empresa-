@@ -21,6 +21,10 @@ export type Empresa = {
   documento: string | null;
   criadoEm: string;
   unidadesMesEstimadas: number;
+  fotoUrl: string | null;
+  descricao: string;
+  slogan: string;
+  paleta: 'folha' | 'oceano' | 'grafite' | 'terracota';
 };
 
 export type VinculoEmpresa = {
@@ -38,6 +42,10 @@ export type RegisterInput = {
   empresaNome: string;
   documento?: string | null;
   unidadesMesEstimadas?: number;
+  fotoUrl?: string | null;
+  descricao?: string;
+  slogan?: string;
+  paleta?: Empresa['paleta'];
 };
 
 export type LoginInput = {
@@ -70,6 +78,10 @@ export class AuthService {
       documento: null,
       criadoEm: agora,
       unidadesMesEstimadas: 300,
+      fotoUrl: null,
+      descricao: 'Operação, estoque e resultados em um só lugar.',
+      slogan: 'Clareza para crescer.',
+      paleta: 'folha',
     });
 
     this.vinculos.push({
@@ -109,6 +121,10 @@ export class AuthService {
       documento: input.documento ?? null,
       criadoEm: new Date().toISOString(),
       unidadesMesEstimadas: Number(input.unidadesMesEstimadas ?? 1),
+      fotoUrl: input.fotoUrl ?? null,
+      descricao: input.descricao ?? '',
+      slogan: input.slogan ?? '',
+      paleta: input.paleta ?? 'folha',
     };
 
     this.usuarios.push(usuario);
@@ -176,6 +192,10 @@ export class AuthService {
               documento: empresa.documento,
               papel: vinculo.papel,
               unidadesMesEstimadas: empresa.unidadesMesEstimadas,
+              fotoUrl: empresa.fotoUrl,
+              descricao: empresa.descricao,
+              slogan: empresa.slogan,
+              paleta: empresa.paleta,
               criadoEm: empresa.criadoEm,
             }
           : null;
@@ -183,7 +203,7 @@ export class AuthService {
       .filter(Boolean);
   }
 
-  criarEmpresa(usuarioId: string, input: { nome: string; documento?: string | null; unidadesMesEstimadas?: number }) {
+  criarEmpresa(usuarioId: string, input: { nome: string; documento?: string | null; unidadesMesEstimadas?: number; fotoUrl?: string | null; descricao?: string; slogan?: string; paleta?: Empresa['paleta'] }) {
     this.validarEmpresa(input.nome, input.unidadesMesEstimadas ?? 1);
 
     const empresa: Empresa = {
@@ -192,6 +212,10 @@ export class AuthService {
       documento: input.documento ?? null,
       criadoEm: new Date().toISOString(),
       unidadesMesEstimadas: Number(input.unidadesMesEstimadas ?? 1),
+      fotoUrl: input.fotoUrl ?? null,
+      descricao: input.descricao ?? '',
+      slogan: input.slogan ?? '',
+      paleta: input.paleta ?? 'folha',
     };
 
     this.empresas.push(empresa);
@@ -209,6 +233,10 @@ export class AuthService {
       documento: empresa.documento,
       papel: 'admin',
       unidadesMesEstimadas: empresa.unidadesMesEstimadas,
+      fotoUrl: empresa.fotoUrl,
+      descricao: empresa.descricao,
+      slogan: empresa.slogan,
+      paleta: empresa.paleta,
       criadoEm: empresa.criadoEm,
     };
   }
@@ -233,11 +261,15 @@ export class AuthService {
       documento: empresa.documento,
       papel: vinculo.papel,
       unidadesMesEstimadas: empresa.unidadesMesEstimadas,
+      fotoUrl: empresa.fotoUrl,
+      descricao: empresa.descricao,
+      slogan: empresa.slogan,
+      paleta: empresa.paleta,
       criadoEm: empresa.criadoEm,
     };
   }
 
-  atualizarEmpresa(usuarioId: string, empresaId: string, input: { nome?: string; documento?: string | null; unidadesMesEstimadas?: number }) {
+  atualizarEmpresa(usuarioId: string, empresaId: string, input: { nome?: string; documento?: string | null; unidadesMesEstimadas?: number; fotoUrl?: string | null; descricao?: string; slogan?: string; paleta?: Empresa['paleta'] }) {
     const isAdmin = this.vinculos.some(
       (item) => item.usuarioId === usuarioId && item.empresaId === empresaId && item.papel === 'admin',
     );
@@ -265,6 +297,14 @@ export class AuthService {
       empresa.documento = input.documento ?? null;
     }
 
+    if (input.fotoUrl !== undefined) {
+      empresa.fotoUrl = input.fotoUrl ?? null;
+    }
+
+    if (input.descricao !== undefined) empresa.descricao = input.descricao.trim();
+    if (input.slogan !== undefined) empresa.slogan = input.slogan.trim();
+    if (input.paleta !== undefined) empresa.paleta = input.paleta;
+
     return this.obterEmpresaDoUsuario(usuarioId, empresaId);
   }
 
@@ -282,6 +322,10 @@ export class AuthService {
         documento: empresa.documento,
         papel: 'admin',
         unidadesMesEstimadas: empresa.unidadesMesEstimadas,
+        fotoUrl: empresa.fotoUrl,
+        descricao: empresa.descricao,
+        slogan: empresa.slogan,
+        paleta: empresa.paleta,
         criadoEm: empresa.criadoEm,
       },
       empresas: this.listarEmpresasDoUsuario(usuario.id),
